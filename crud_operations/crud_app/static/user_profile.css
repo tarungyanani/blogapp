@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff;
+    background-image: url('https://img.freepik.com/free-photo/blue-toned-paper-sheets-with-copy-space_23-2148320450.jpg?t=st=1718175613~exp=1718179213~hmac=f1f6678aa86f2d2dfa5b4a538eaa7fae9676603f39b604fc077651ef4af75b4e&w=1060');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user_profile {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.profile-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #3498db;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+span {
+    display: block;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+}
+
+span::before {
+    content: attr(class);
+    font-weight: 700;
+    color: #3498db;
+    margin-right: 10px;
+    text-transform: capitalize;
+}
+
+.bio-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.bio {
+    font-style: italic;
+    color: #666;
+    line-height: 1.6;
+}
+
+.button-group {
+    display: flex;
+    justify-content:center;
+    margin-top: 30px;
+    gap: 150px;
+}
+
+.back-button, .edit-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-button {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.edit-button {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.back-button:hover, .edit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.edit-button:hover {
+    background-color: #2980b9;
+}
+
+li {
+    list-style-type: none;
+}

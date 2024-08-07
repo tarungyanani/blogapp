@@ -1,0 +1,8 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+    <div class="profile">
+      <h2>{{ user.username }}</h2>
+      <img src="{{ user.profile_image.url }}" alt="{{ user.username }}'s profile picture" style="width: 150px; height: 150px; border-radius: 50%;">
+    </div>
+{% endblock %}

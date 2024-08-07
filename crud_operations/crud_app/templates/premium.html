@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Premium Access</title>
+    <link rel="stylesheet" href="{% static "premium.css" %}">
+  </head>
+  <body>
+    <h1>Premium Access</h1>
+    <p>Upgrade to premium to get access to more features</p>
+    <div class="premium-features">
+      <ul>
+        <li>Ad-free Experience</li>
+        <li>Access to more blogs</li>
+        <li>Offline Access</li>
+        <li>100 personal blogs</li>
+      </ul>
+    </div>
+    <div class="button-group">
+      <a href="{% url 'index' %}">Cancel</a>
+      <button>Upgrade to Premium</button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    /* padding: 20px; */
+    background-image: url('https://img.freepik.com/free-photo/blue-toned-paper-sheets-with-copy-space_23-2148320450.jpg?t=st=1718175613~exp=1718179213~hmac=f1f6678aa86f2d2dfa5b4a538eaa7fae9676603f39b604fc077651ef4af75b4e&w=1060');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Todo List Section */
+.todo-list-section {
+    width: 80%;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #2c3e50;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.todo-list-section .content h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.todo-list-section .content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.todo-list-section .content ul lh,
+.todo-list-section .content ul li {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 15px 10px;
+    align-items: center;
+    text-align: left;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+.todo-list-section .content ul lh {
+    background-color: #ecf0f1;
+    border-bottom: 2px solid #bdc3c7;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 15px;
+    text-align: center; /* Center header text */
+}
+
+.todo-list-section .content ul li {
+    background-color: #fdfefe;
+    border-bottom: 1px solid #ecf0f1;
+    transition: background-color 0.3s;
+    margin-bottom: 15px; /* Add bottom margin for spacing */
+}
+
+.todo-list-section .content ul li:nth-child(even) {
+    background-color: #f8f9f9;
+}
+
+.todo-list-section .content ul li:hover {
+    background-color: #f0f3f4;
+}
+
+.todo-list-section .content ul li span {
+    padding: 0 43px;
+}
+
+.todo-list-section .content ul li a {
+    color: #3498db;
+    text-decoration: none;
+    align-items: center;
+    display: flex;
+}
+
+.todo-list-section .content ul li .description {
+    grid-column: span 5; /* Span all columns for description */
+    padding: 10px 10px 0 10px; /* Additional padding to separate from the title */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.todo-list-section .content ul li span.button-container {
+    display: flex;
+    gap: 25px;
+    margin-right: 1px;
+}
+
+.todo-list-section .content ul li span button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-bottom: 5px;
+    width: 100%;
+    font-weight: bold;
+}
+
+.todo-list-section .content ul li span button a {
+    color: white;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.todo-list-section .content ul li span button:hover {
+    background-color: #2980b9;
+}

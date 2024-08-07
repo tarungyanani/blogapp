@@ -1,0 +1,32 @@
+  {% load static %}
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>Your Blog</title>
+      <link rel="stylesheet" href="{% static 'view_todo.css' %}">
+      {% comment %} <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather&display=swap" rel="stylesheet"> {% endcomment %}
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+      <div class="container1">
+      <ul>
+        <li>
+          <div class="header">
+            {% if todo.blog_image %}
+              <img src="{{ todo.blog_image.url }}" alt="{{ todo.title }}" class="blog-image" style="width: 150px; height: 150px; border-radius: 10%;">
+            {% endif %}
+            <h2>{{ todo.title }}</h2>
+          </div>
+          <span class="description">Description: {{ todo.description }}</span>
+          <div class="timestamps">
+            <span class="timestamp created_at">Created At: {{ todo.created_at }}</span>
+            <span class="timestamp updated_at">Updated At: {{ todo.updated_at }}</span>
+          </div>
+          <div class="button-group">
+              <a href="{% url 'index' %}" class="back-button">Back</a>
+          </div>
+        </li>
+      </ul>
+      </div>
+  </body>
+  </html>

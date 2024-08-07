@@ -1,0 +1,89 @@
+body {
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  /* height : 100vh; */
+  font-family: sans-serif;
+  background-color : #f1f1f1; 
+  flex-direction : column;
+  background-image: url('https://img.freepik.com/free-photo/blue-toned-paper-sheets-with-copy-space_23-2148320450.jpg?t=st=1718175613~exp=1718179213~hmac=f1f6678aa86f2d2dfa5b4a538eaa7fae9676603f39b604fc077651ef4af75b4e&w=1060');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.main {
+  display : flex;
+  flex-direction : column;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  align-items : center;
+  padding : 10px;
+  border : 1px solid #ccc;
+  border-radius : 10px;
+  background-color : #f0e9e9;
+  width : 500px;
+  gap : 1px;
+
+}
+.heading{
+  gap: 1px;
+  align-items: center;
+  text-align: center;
+}
+h1 {
+  font-size : 4em;
+  color : #000000;
+  /* text-shadow: #ccc 3px 3px 3px; */
+  margin-bottom: 0px;
+  margin-top: 0px;
+
+}
+h2 {
+  font-size: 3em;
+  font-family: Gill Sans;
+}
+form{
+  width : 60%;
+}
+
+label {
+  display : block;
+  width : 100%;
+  margin-top : 15px;
+  margin-bottom : 3px;
+  text-align: left;
+  color : #555;
+  font-weight : bold; 
+}
+
+input {
+  display : block;
+  width : 100%;
+  padding : 10px;
+  border : 1px solid #ddd;
+  border-radius : 5px;
+  margin-bottom : 15px;
+}
+
+button {
+  padding : 15px;
+  border : none;
+  border-radius : 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color : #3498db;
+  color : white;
+  cursor : pointer;
+  font-size : 16px;
+  width : 100%;
+}
+
+button:hover {
+  background-color : #2980b9;
+  transition-duration: 0.3s;
+}
+
+.wrap {
+display : flex;
+justify-content : center;
+align-items: center;
+}

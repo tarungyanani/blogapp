@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+    <div class="todo-list-section">
+        <div class="content">
+            <h2>Your Blog List</h2>
+            <ul>
+                <lh>
+                    <span>Title</span>
+                    <span>Created At</span>
+                    <span>Updated At</span>
+                    <span>Actions</span>
+                </lh>
+
+                {% for todo in todos reversed%}
+                <li>
+                    <a href="{% url 'view_todo' todo.id %}" class="todo-button"><span>{{ todo.title }}</span></a>
+                    <span> {{ todo.created_at }}</span>
+                    <span> {{ todo.updated_at }}</span>
+
+                    <span class="button-container">
+                        <button><a href="{% url 'edit_todo' todo.id %}">Edit</a></button>
+                        <button><a href="{% url 'delete_todo' todo.id %}">Delete</a></button>
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+body {
+    font-family: 'Playfair Display', serif;
+    background-color: #f8f8f8;
+    background-image: url('https://img.freepik.com/free-photo/blue-toned-paper-sheets-with-copy-space_23-2148320450.jpg?t=st=1718175613~exp=1718179213~hmac=f1f6678aa86f2d2dfa5b4a538eaa7fae9676603f39b604fc077651ef4af75b4e&w=1060');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    /* padding: 0; */
+    /* color: #333; */
+    /* line-height: 1.6; */
+}
+
+.container1 {
+    max-width: 900px;
+    margin: 60px auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 30px;
+}
+
+.blog-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border: 5px solid #fff;
+}
+
+h2 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 2.8em;
+    flex-grow: 1;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.2;
+}
+
+.description {
+    font-size: 1.2em;
+    line-height: 2.2;
+    color: #34495e;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-left: 5px solid #3498db;
+    font-family: 'Merriweather', serif;
+}
+
+.timestamps {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: right;
+    /* font-style: italic; */
+    color: #7f8c8d;
+    font-weight: bold;
+}
+
+.timestamp {
+    display: block;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.button-group {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #2c3e50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9em;
+}
+
+.back-button:hover {
+    background-color: #34495e;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .blog-image {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 2.2em;
+    }
+
+    .timestamps {
+        position: static;
+        text-align: center;
+        margin-top: 20px;
+    }
+}

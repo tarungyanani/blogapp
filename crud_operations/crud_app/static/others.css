@@ -1,0 +1,122 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #fff;
+    background-image: url('https://img.freepik.com/free-photo/blue-toned-paper-sheets-with-copy-space_23-2148320450.jpg?t=st=1718175613~exp=1718179213~hmac=f1f6678aa86f2d2dfa5b4a538eaa7fae9676603f39b604fc077651ef4af75b4e&w=1060');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+.others-blog {
+    background-color: rgba(255, 255, 255);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 50%;
+    max-width: 700px;
+    margin: 50px auto;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: #4a4a4a;
+    font-size: 1.8em;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    margin: 10px auto 0;
+}
+
+.todo-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.todo-item {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.todo-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, #3498db, #2980b9);
+}
+
+.todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.todo-link {
+    display: block;
+    padding: 15px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.todo-info p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.todo-info span {
+    color: #333;
+    font-weight: bold;
+}
+
+.back-button {
+    text-align: center;
+    margin-top: 20px;
+    list-style: none;
+}
+
+.back-button a {
+    display: inline-block;
+    padding: 8px 16px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+    font-size: 1.0em;
+}
+
+.back-button a:hover {
+    background: linear-gradient(90deg, #2980b9, #3498db);
+}
+
+@media (max-width: 480px) {
+    .others-blog {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .todo-link {
+        padding: 12px;
+    }
+}

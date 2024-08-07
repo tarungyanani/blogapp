@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static "user_profile.css" %}">
+</head>
+<body>
+
+    <div class="user_profile">
+        <li>
+            <h2>Your Profile</h2>
+            {% if user.is_authenticated %}
+            <div class="profile-top">
+                <div class="profile-image">
+                    {% if user.profile.image %}
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+                    {% else %}
+                    <img src="{% static 'default.jpg' %}" alt="{{ user.username }}">
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            <span class="first_name">: {{ user.first_name }}</span>
+            <span class="last_name">: {{ user.last_name }}</span>
+            <span class="email">: {{ user.email }}</span>
+            <span class="phone">: {{ user.phone }}</span>
+            <span class="gender">: {{ user.gender }}</span>
+            <span class="dob">: {{ user.dob }}</span>
+            <div class="bio-section">
+                <span class="bio">: {{ user.bio }}</span>
+            </div>
+            <div class="button-group">
+                <a href="{% url 'index' %}" class="back-button">Back</a>
+                <a href="{% url 'edit_profile' %}" class="edit-button">Edit Profile</a>
+            </div>
+        </li>
+    </div>
+</body>
+</html>

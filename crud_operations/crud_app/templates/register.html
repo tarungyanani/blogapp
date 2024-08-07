@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>REGISTER PAGE</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static "style.css" %}">
+</head>
+<body>
+<div class="main">
+    <div class="heading">
+    <h1>ToDo</h1>
+    <h2>Create a ToDo Account</h2>
+    </div>
+    <form method="post" action="" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {% comment %} <label for="name">Username:</label>
+        <input type="text" id="name" name="username" placeholder="Enter your Userame" required> {% endcomment %}
+
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="first_name" placeholder="Enter your first name" required>
+
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="last_name" placeholder="Enter your Last name" required>
+
+        <label for="email">Email Id:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your mail id" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+        <label for="password">Confirm Password:</label>
+        <input type="password" id="password" name="confirm_password" placeholder="Enter your Confirm password" required>
+
+        {% comment %} <label for="phone"> Phone No. </label>
+        <input type="text" name="phone" placeholder="Enter your Phone Number">
+
+        <label for="image">Profile Picture:</label>
+        <input type="file" id="profile_image" name="profile_image" accept="image/*"> {% endcomment %}
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+        <button type="submit">Submit</button>
+    </form>
+    <p>Already have an account? <a href="{% url "login_page" %}" style="text-decoration: none;">Sign in</a></p>
+</div>
+</body>
+</html>
