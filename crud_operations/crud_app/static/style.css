@@ -19,9 +19,10 @@ body {
   padding : 10px;
   border : 1px solid #ccc;
   border-radius : 10px;
-  background-color : #f0e9e9;
+  background-color : #fff;
   width : 500px;
   gap : 1px;
+  margin-top: 50px;
 
 }
 .heading{
@@ -30,16 +31,17 @@ body {
   text-align: center;
 }
 h1 {
-  font-size : 4em;
-  color : #000000;
+  font-size : 3.5em;
+  color : #4e9cc9;
   /* text-shadow: #ccc 3px 3px 3px; */
   margin-bottom: 0px;
   margin-top: 0px;
+  font-family: 'Times New Roman', Times, serif
 
 }
 h2 {
-  font-size: 3em;
-  font-family: Gill Sans;
+  font-size: 2.0em;
+  font-family: sans-serif;
 }
 form{
   width : 60%;
@@ -86,4 +88,11 @@ button:hover {
 display : flex;
 justify-content : center;
 align-items: center;
+}
+
+p {
+  font-size : 16px;
+  font-weight : bold;
+  color : #555;
+  margin-top : 5px;
 }

@@ -18,6 +18,7 @@ from django.utils import timezone
 from .helpers import send_forget_password_email
 import uuid
 from django.contrib import messages
+from django.urls import reverse
 
 email_regex =  r'^(?=.*\d).{8,}$'
 email_validator = RegexValidator(
@@ -185,7 +186,8 @@ def login_page(request):
             # print("dsfghjkhgfds")
             return redirect('index')
         else:
-            return HttpResponse('Invalid credentials')
+            error = "Invalid Credentials"
+            return render(request, 'login.html', {'error': error})
     return render(request, 'login.html')
 
 @login_required
@@ -344,32 +346,33 @@ def premium(request):
 
 def changepassword(request, token):
     try:
-        if request.method == 'POST':
-            new_password = request.POST.get('new_password')
-            confirm_password = request.POST.get('confirm_password')
-            user_id = request.POST.get('user_id')
-            print(f"User ID: {user_id}")
-            if user_id is None:
-                messages.success(request, 'Invalid user')
-                return redirect(f'/change_password/{token}/')
+        user = CustomUser.objects.get(forgot_password_token=token)
+    except CustomUser.DoesNotExist:
+        return HttpResponse("Invalid token", status=400)
 
-            if new_password != confirm_password:
-                messages.success(request, 'Password and confirm password must be same')
-                return redirect(f'/change_password/{token}/')
+    if request.method == "POST":
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
 
-            user_obj = CustomUser.objects.get(id=user_id)
-            user_obj.set_password(new_password)
-            user_obj.save()
-            messages.success(request, 'Password changed successfully')
-            return redirect('login_page')
+        if new_password == confirm_password:
+            # Apply the password validator defined in your model
+            try:
+                # Validate the password according to your custom rules
+                password_validator(new_password)
+            except ValidationError as e:
+                return HttpResponse(f"Password validation failed: {', '.join(e.messages)}", status=400)
 
-    except Exception as e:
-        print(f"Exception: {e}")
-        messages.error(request, 'An error occurred. Please try again.')
+            # Update the user's password
+            user.password = make_password(new_password)
+            user.forgot_password_token = None  # Invalidate the token after use
+            user.save()
 
-    # Ensure token is being passed correctly
-    print(f"Token: {token}")
-    return render(request, 'change_password.html', {'token': token, 'user': request.user})
+            # Redirect to a success page or login
+            return redirect(reverse('login_page'))
+        else:
+            return HttpResponse("Passwords do not match", status=400)
+
+    return render(request, 'change_password.html', {'token': token})
 
 def forgotpasswordpage(request):
     if request.method == 'POST':
@@ -389,24 +392,3 @@ def forgotpasswordpage(request):
         return redirect('login_page')
     
     return render(request, 'forgotpassword.html')
-    
-    # try:
-    #     if request.method == 'POST':
-    #         email = request.POST.get('email')
-            
-    #         if not User.objects.filter(email=email).exists():
-    #             error = "Email does not exist"
-    #             return render(request, 'forgotpassword.html', {'error': error})
-            
-    #         user_obj = User.objects.get(email=email)
-    #         token = str(uuid.uuid4())
-    #         send_forget_password_email(user_obj, token)
-    #         messages.success(request, 'An email has been sent to you with a link to reset your password')
-    #         return redirect('login_page')
-        
-    # except Exception as e:
-    #     print(e)
-    #     error = "Something went wrong"
-    #     return render(request, 'forgotpassword.html', {'error': error})
-
-    # return render(request, 'forgotpassword.html')

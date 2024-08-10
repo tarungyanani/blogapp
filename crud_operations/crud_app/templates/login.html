@@ -9,13 +9,16 @@
 <body>
 <div class="main">
 </a>
-    <h2>Login Account</h2>
+    <h2>Login</h2>
     <form method="post">
         {% csrf_token %}
         <label for="email">Email :</label>
         <input type="text" id="email" name="email" placeholder="Enter your email id" required>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
         <button type="submit">Submit</button>
     </form>
     <p>Don't have an account? <a href= "{% url "register_page" %}" style="text-decoration: none;">Sign Up</a></p>

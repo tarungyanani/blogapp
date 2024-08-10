@@ -5,7 +5,7 @@ body {
   /* height : 100vh; */
   font-family: sans-serif;
   background-color : #f1f1f1; 
-  margin-top: 70px;
+  margin-top: 150px;
   flex-direction : column;
   background-image: url('https://img.freepik.com/free-photo/blue-toned-paper-sheets-with-copy-space_23-2148320450.jpg?t=st=1718175613~exp=1718179213~hmac=f1f6678aa86f2d2dfa5b4a538eaa7fae9676603f39b604fc077651ef4af75b4e&w=1060');
   background-size: cover;
@@ -17,11 +17,14 @@ body {
   flex-direction : column;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   align-items : center;
-  padding : 20px;
+  padding : 10px;
+  padding-bottom: 35px;
+  padding-top: px;
   border : 1px solid #ccc;
   border-radius : 10px;
-  background-color : #f0e9e9;
+  background-color : #fff;
   width : 500px
+
 }
 
 h1 {
@@ -29,6 +32,7 @@ h1 {
   color : #ff5e00;
   text-shadow: #ccc 3px 3px 3px;
 }
+
 h2 {
   font-size: 3em;
   font-family: Gill Sans;
@@ -81,8 +85,14 @@ align-items: center;
 }
 
 p {
-  font-size : 14px;
+  font-size : 16px;
   font-weight : bold;
   color : #555;
+  margin-top : 5px;
+}
+
+a{
+  font-size : 16px;
+  font-weight : bold;
   margin-top : 5px;
 }

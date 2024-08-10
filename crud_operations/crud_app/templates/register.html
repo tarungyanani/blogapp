@@ -9,7 +9,7 @@
 <body>
 <div class="main">
     <div class="heading">
-    <h1>ToDo</h1>
+    <h1>BlogHub</h1>
     <h2>Create a ToDo Account</h2>
     </div>
     <form method="post" action="" enctype='multipart/form-data'>
@@ -31,12 +31,6 @@
 
         <label for="password">Confirm Password:</label>
         <input type="password" id="password" name="confirm_password" placeholder="Enter your Confirm password" required>
-
-        {% comment %} <label for="phone"> Phone No. </label>
-        <input type="text" name="phone" placeholder="Enter your Phone Number">
-
-        <label for="image">Profile Picture:</label>
-        <input type="file" id="profile_image" name="profile_image" accept="image/*"> {% endcomment %}
 
         {% if error %}
             <p style="color: red;">{{ error }}</p>
