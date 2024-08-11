@@ -9,4 +9,3 @@ class RedirectAuthenticatedUserMiddleware:
         if request.user.is_authenticated and request.path == reverse('login_page'):
             return redirect('index')
         return self.get_response(request)
-    

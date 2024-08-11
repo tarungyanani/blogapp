@@ -17,8 +17,12 @@ import random
 from django.utils import timezone
 from .helpers import send_forget_password_email
 import uuid
+from django.views.decorators.cache import never_cache
 from django.contrib import messages
 from django.urls import reverse
+from .serializer import LoginSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 email_regex =  r'^(?=.*\d).{8,}$'
 email_validator = RegexValidator(
@@ -41,7 +45,28 @@ def send_email(email, first_name, otp):
     recipient_list = [email]
     send_mail(subject, message, email_from, recipient_list)
 
+
+class LoginAPI(APIView):
+    def post(self, request):
+        try:
+            data = request.data
+            serializer = LoginSerializer(data=data)
+            if serializer.is_valid():
+                email = serializer.validated_data['email']
+                password = serializer.validated_data['password']
+                user = authenticate(request, email=email, password=password)
+                if user:
+                    login(request, user)
+                    return Response({'message': 'Login Successful'})
+                else:
+                    return Response({'message': 'Invalid Credentials'}, status=400)
+            else:
+                return Response({'message': serializer.errors}, status=400)
+        except Exception as e:
+            return Response({'message': str(e)}, status=400)
+
 @csrf_protect
+@never_cache
 def register_page(request):
     if request.method == 'POST':
         # username = request.POST.get('username')
@@ -69,14 +94,9 @@ def register_page(request):
             error = "Password and confirm password must be same."
             return render(request, 'register.html', {'error': error})
         
-        # if profile_image:
-        #     # Adjust this path as per your project's media settings
-        #     profile_image_path = os.path.join(settings.MEDIA_ROOT, profile_image.name)
-        #     with open(profile_image_path, 'wb') as destination:
-        #         for chunk in profile_image.chunks():
-        #             destination.write(chunk)
-        #     # Now store the path in the session
-        #     request.session['profile_image_path'] = profile_image_path
+        if CustomUser.objects.filter(email=email).exists():
+            error = "Email already exists"
+            return render(request, 'register.html', {'error': error})
         
         otp = generate_otp()
         send_email(email, first_name, otp)
@@ -207,6 +227,8 @@ def ced_todo(request):
         return redirect('index')
     return render(request, 'ced_todoo.html')
 
+@csrf_protect
+@never_cache
 @login_required
 def index(request):
     u = request.user
@@ -227,6 +249,7 @@ def index(request):
         return redirect('todo_list')
     return render(request, 'dashboard.html', {'todos': todos})
 
+@never_cache
 @login_required
 def logout_view(request):
     logout(request)
@@ -344,6 +367,7 @@ def edit_profile(request):
 def premium(request):
     return render(request, 'premium.html')
 
+@login_required
 def changepassword(request, token):
     try:
         user = CustomUser.objects.get(forgot_password_token=token)
@@ -373,6 +397,7 @@ def changepassword(request, token):
             return HttpResponse("Passwords do not match", status=400)
 
     return render(request, 'change_password.html', {'token': token})
+
 
 def forgotpasswordpage(request):
     if request.method == 'POST':
