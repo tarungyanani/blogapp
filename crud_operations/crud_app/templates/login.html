@@ -16,8 +16,16 @@
         <input type="text" id="email" name="email" placeholder="Enter your email id" required>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
+        {% if errors %}
+            <div class="error-messages">
+                <ul>
+                    {% for field, messages in errors.items %}
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
         {% endif %}
         <button type="submit">Submit</button>
     </form>

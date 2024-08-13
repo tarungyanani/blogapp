@@ -8,7 +8,7 @@ from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from .utils import send_email
 from django.core.mail import send_mail
@@ -20,9 +20,16 @@ import uuid
 from django.views.decorators.cache import never_cache
 from django.contrib import messages
 from django.urls import reverse
-from .serializer import LoginSerializer
-from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from . import serializers
+from rest_framework import generics
+from .serializers import UserLoginSerializer
+
+
 
 email_regex =  r'^(?=.*\d).{8,}$'
 email_validator = RegexValidator(
@@ -45,25 +52,6 @@ def send_email(email, first_name, otp):
     recipient_list = [email]
     send_mail(subject, message, email_from, recipient_list)
 
-
-class LoginAPI(APIView):
-    def post(self, request):
-        try:
-            data = request.data
-            serializer = LoginSerializer(data=data)
-            if serializer.is_valid():
-                email = serializer.validated_data['email']
-                password = serializer.validated_data['password']
-                user = authenticate(request, email=email, password=password)
-                if user:
-                    login(request, user)
-                    return Response({'message': 'Login Successful'})
-                else:
-                    return Response({'message': 'Invalid Credentials'}, status=400)
-            else:
-                return Response({'message': serializer.errors}, status=400)
-        except Exception as e:
-            return Response({'message': str(e)}, status=400)
 
 @csrf_protect
 @never_cache
@@ -188,27 +176,45 @@ def verify_otp(request):
     return render(request, 'verify_otp.html')
 
 
-@csrf_protect
-def login_page(request):
-    # print("324567890-987654")
-    if request.method == 'POST':
-        # print(111111111111111111)
-        email = request.POST.get('email')
-        # username = request.POST.get('username')
-        password = request.POST.get('password')
-        # print(email, password, 5555555555553234)
-        user = authenticate(request, email=email, password=password)
-        # print(user, 66666666663234)
-        # user = CustomUser.objects.filter(username=username).first()
+# @csrf_protect
+# def login_page(request):
+#     # print("324567890-987654")
+#     if request.method == 'POST':
+#         # print(111111111111111111)
+#         email = request.POST.get('email')
+#         # username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         # print(email, password, 5555555555553234)
+#         user = authenticate(request, email=email, password=password)
+#         # print(user, 66666666663234)
+#         # user = CustomUser.objects.filter(username=username).first()
 
-        if user:# Ensure all fields are provided
+#         if user:# Ensure all fields are provided
+#             login(request, user)
+#             # print("dsfghjkhgfds")
+#             return redirect('index')
+#         else:
+#             error = "Invalid Credentials"
+#             return render(request, 'login.html', {'error': error})
+#     return render(request, 'login.html')
+
+class LoginView(generics.GenericAPIView):
+    serializer_class = UserLoginSerializer
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.validated_data['user']
             login(request, user)
-            # print("dsfghjkhgfds")
-            return redirect('index')
+            return redirect('index')  # Redirect to the dashboard page after login
         else:
-            error = "Invalid Credentials"
-            return render(request, 'login.html', {'error': error})
-    return render(request, 'login.html')
+            # If validation fails, render the login page with the error message
+            return render(request, 'login.html', {'errors': serializer.errors, 'form': serializer.data})
+
+    def get(self, request):
+        return render(request, 'login.html')
 
 @login_required
 def ced_todo(request):
