@@ -8,112 +8,116 @@ body {
     background-repeat: no-repeat;
 }
 
-/* Todo List Section */
-.todo-list-section {
-    width: 80%;
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #2c3e50;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+.container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-.todo-list-section .content h2 {
-    text-align: center;
-    color: #fff;
-    margin-bottom: 30px;
-    font-size: 24px;
-    letter-spacing: 1px;
-}
-
-.todo-list-section .content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.todo-list-section .content ul lh,
-.todo-list-section .content ul li {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding: 15px 10px;
-    align-items: center;
-    text-align: left;
+.create-blog {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
     border-radius: 8px;
-    gap: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-.todo-list-section .content ul lh {
-    background-color: #ecf0f1;
-    border-bottom: 2px solid #bdc3c7;
-    font-weight: bold;
-    color: #34495e;
+.create-blog h2 {
     margin-bottom: 15px;
-    text-align: center; /* Center header text */
+    text-align: center;
 }
 
-.todo-list-section .content ul li {
-    background-color: #fdfefe;
-    border-bottom: 1px solid #ecf0f1;
-    transition: background-color 0.3s;
-    margin-bottom: 15px; /* Add bottom margin for spacing */
+.create-blog form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
 }
 
-.todo-list-section .content ul li:nth-child(even) {
-    background-color: #f8f9f9;
+.create-blog label {
+    margin-top: 10px;
 }
 
-.todo-list-section .content ul li:hover {
-    background-color: #f0f3f4;
+.create-blog input,
+.create-blog textarea {
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
-.todo-list-section .content ul li span {
-    padding: 0 43px;
-}
-
-.todo-list-section .content ul li a {
-    color: #3498db;
-    text-decoration: none;
+.create-blog button {
     align-items: center;
-    display: flex;
-}
-
-.todo-list-section .content ul li .description {
-    grid-column: span 5; /* Span all columns for description */
-    padding: 10px 10px 0 10px; /* Additional padding to separate from the title */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.todo-list-section .content ul li span.button-container {
-    display: flex;
-    gap: 25px;
-    margin-right: 1px;
-}
-
-.todo-list-section .content ul li span button {
-    background-color: #3498db;
+    padding: 5px 10px;
+    background-color: #007bff;
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
     cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s;
+    width: 100px;
+    margin: auto;
+}
+
+.blog-list {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.blog-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+}
+
+.blog-image {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd;
+    border-radius: 8px;
+}
+
+.blog-content {
+    flex: 1;
+}
+
+.blog-content h3 {
     margin-bottom: 5px;
-    width: 100%;
-    font-weight: bold;
 }
 
-.todo-list-section .content ul li span button a {
-    color: white;
+.blog-content p {
+    margin-bottom: 10px;
+}
+
+.learn-more {
+    color: #007bff;
     text-decoration: none;
-    align-items: center;
-    justify-content: center;
 }
 
-.todo-list-section .content ul li span button:hover {
-    background-color: #2980b9;
+.blog-actions {
+    margin-top: 10px;
+}
+
+.blog-actions button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+}
+
+.blog-meta {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+    color: #666;
+}
+
+a {
+    text-decoration: none;
+    color: black
 }

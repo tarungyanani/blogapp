@@ -4,7 +4,6 @@
   <head>
       <title>Your Blog</title>
       <link rel="stylesheet" href="{% static 'view_todo.css' %}">
-      {% comment %} <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather&display=swap" rel="stylesheet"> {% endcomment %}
   </head>
   <body>
     {% include 'navbar.html' %}
@@ -22,9 +21,9 @@
             <span class="timestamp created_at">Created At: {{ todo.created_at }}</span>
             <span class="timestamp updated_at">Updated At: {{ todo.updated_at }}</span>
           </div>
-          <div class="button-group">
-              <a href="{% url 'index' %}" class="back-button">Back</a>
-          </div>
+          {% comment %} <div class="button-group">
+              <a href="{% url 'my_blog' %}" class="back-button">Back</a>
+          </div> {% endcomment %}
         </li>
       </ul>
       </div>

@@ -1,43 +1,57 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="{% static 'style1.css' %}">
 </head>
 <body>
     {% include 'navbar.html' %}
-
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
     
-    <div class="todo-list-section">
-        <div class="content">
-            <h2>Your Blog List</h2>
-            <ul>
-                <lh>
-                    <span>Title</span>
-                    <span>Created At</span>
-                    <span>Updated At</span>
-                    <span>Actions</span>
-                </lh>
-
-                {% for todo in todos reversed%}
-                <li>
-                    <a href="{% url 'view_todo' todo.id %}" class="todo-button"><span>{{ todo.title }}</span></a>
-                    <span> {{ todo.created_at }}</span>
-                    <span> {{ todo.updated_at }}</span>
-
-                    <span class="button-container">
-                        <button><a href="{% url 'edit_todo' todo.id %}">Edit</a></button>
-                        <button><a href="{% url 'delete_todo' todo.id %}">Delete</a></button>
-                    </span>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+    <main class="container">
+        <section class="create-blog">
+            <h2>Create blog</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+                
+                <label for="blog-image">Blog Image:</label>
+                <input type="file" id="blog-image" name="blog-image" accept="image/*">
+                
+                <button type="submit">Create</button>
+            </form>
+        </section>
+        
+        <section class="blog-list">
+            {% for todo in todos reversed %}  
+            <a class="blog-card" href="{% url 'view_todo' todo.id %}"">
+                <div class="blog-image">
+                    {% if todo.blog_image %}
+                        <img src="{{ todo.blog_image.url }}" alt="{{ todo.title }}" class="blog-image" style="width: 150px; height: 150px; border-radius: 10%;">
+                    {% endif %}
+                </div>
+                <div class="blog-content">
+                    <h3>Title: {{ todo.title }}</h3>
+                    <p>Description: {{ todo.description }}</p>
+                    <p>Author: {{ todo.user.first_name }} {{ todo.user.last_name }}</p>
+                    <div class="blog-actions">
+                        <button class="like-btn">Like</button>
+                        <button class="comment-btn">Comment</button>
+                    </div>
+                </div>
+                <div class="blog-meta">
+                    <span>Created at: {{ todo.created_at }}</span>
+                    <span>Updated at: {{ todo.updated_at }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </section>
+    </main>
 </body>
 </html>

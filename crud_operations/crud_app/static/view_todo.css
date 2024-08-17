@@ -1,23 +1,22 @@
 body {
-    font-family: 'Playfair Display', serif;
     background-color: #f8f8f8;
     background-image: url('https://img.freepik.com/free-photo/blue-toned-paper-sheets-with-copy-space_23-2148320450.jpg?t=st=1718175613~exp=1718179213~hmac=f1f6678aa86f2d2dfa5b4a538eaa7fae9676603f39b604fc077651ef4af75b4e&w=1060');
     background-size: cover;
     background-repeat: no-repeat;
     margin: 0;
-    /* padding: 0; */
-    /* color: #333; */
-    /* line-height: 1.6; */
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .container1 {
-    max-width: 900px;
+    max-width: 800px;
     margin: 60px auto;
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     padding: 30px;
     position: relative;
+    font-family:'Times New Roman', Times, serif
 }
 
 .header {
@@ -56,7 +55,6 @@ h2 {
     padding: 20px;
     background-color: #f8f9fa;
     border-left: 5px solid #3498db;
-    font-family: 'Merriweather', serif;
 }
 
 .timestamps {
@@ -64,7 +62,6 @@ h2 {
     top: 20px;
     right: 20px;
     text-align: right;
-    /* font-style: italic; */
     color: #7f8c8d;
     font-weight: bold;
 }
@@ -103,10 +100,6 @@ h2 {
 ul {
     list-style-type: none;
     padding: 0;
-}
-
-li {
-    padding: 10px;
 }
 
 @media (max-width: 768px) {

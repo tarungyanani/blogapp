@@ -18,7 +18,24 @@
             width: 100%;
             justify-content: space-between;
             align-items: center;
-            position: relative; /* Ensure absolute children are positioned relative to navbar */
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-width: bold;
+        }
+
+        .navbar a:hover {
+            color: #f39c12; /* Yellow */
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap : 20px;
+            
         }
 
         .profile-pic {
@@ -38,67 +55,18 @@
             object-fit: cover;
         }
 
-        .nav-links {
+        .center {
             display: flex;
-            gap: 20px; /* Adjust the gap between links as needed */
-        }
-
-        .nav-links form {
-            margin: 0;
-            padding: 0;
-            background: none;
-            border: none;
-        }
-
-        .nav-links a {
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .nav-links a:hover {
-            background-color: #3498db;
-        }
-
-        .build-todo {
-            position: absolute;
-            left: 250px;
-            top: 27px;
-            white-space: nowrap;
-            text-overflow: clip;
+            justify-content: space-between;
+            align-items: center;
             list-style: none;
-        }
-
-        .others_blog {
-            position: absolute;
-            left: 470px;
-            top: 27px;
-            white-space: nowrap;
-            text-overflow: clip;
-            list-style: none;
-        }
-
-        .user-profile {
-            position: absolute;
-            left: 100px;
-            top: 27px;
-            list-style: none;
-        }
-
-        .premium {
-            position: absolute;
-            right: 150px;
-            top: 27px;
-            list-style: none;
+            gap : 100px;
         }
 
         .logout-button {
-            position: absolute;
+            {% comment %} position: absolute;
             right: 35px;
-            top: 27px;
+            top: 27px; {% endcomment %}
             list-style: none;
         }
     </style>
@@ -106,9 +74,10 @@
 <body>
     <nav>
         <div class="navbar">
+            <div class="profile">
             {% if user.is_authenticated %}
                 <div class="profile-pic">
-                    <a href="{% url 'index' %}">
+                    <a href="">
                         {% if user.profile.image %}
                             <img src="{{ user.profile.image.url }}" alt="{{ user.username }}">
                         {% else %}
@@ -117,37 +86,38 @@
                     </a>
                 </div>
             {% endif %}
-            <div class="nav-links">
-                <div class="build-todo">
-                    <form method="POST" action="">
-                        {% csrf_token %}
-                        <li><a href="{% url 'ced_todo' %}">Create New Blog</a></li>
-                    </form>
-                </div>
-                <div class="others_blog">
-                    <form method="POST" action="">
-                        {% csrf_token %}
-                        <li><a href="{% url 'others_blog' %}">Others Blog</a></li>
-                    </form>
-                </div>
                 <div class="user-profile">
                     <form method="POST" action="">
                         {% csrf_token %}
                         <li><a href="{% url 'user_profile' %}">My Profile</a></li>
                     </form>
                 </div>
-                <div class="premium">
+            </div>
+            <div class="center">
+                <div class="build-todo">
                     <form method="POST" action="">
                         {% csrf_token %}
-                        <li><a href="{% url 'premium' %}">Premium</a></li>
+                        <li><a href="{% url 'ced_todo' %}">Create Blog</a></li>
                     </form>
                 </div>
-                <div class="logout-button">
+                <div class="home">
                     <form method="POST" action="">
                         {% csrf_token %}
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                        <li><a href="{% url 'index' %}">Home</a></li>
                     </form>
                 </div>
+                <div class="my-blog">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <li><a href="{% url 'my_blog' %}">My Blog</a></li>
+                    </form>
+                </div>
+            </div>
+            <div class="logout-button">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </form>
             </div>
         </div>
     </nav>

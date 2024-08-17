@@ -238,23 +238,11 @@ def ced_todo(request):
 @login_required
 def index(request):
     u = request.user
-    print(u,4444)
-    todos = ToDo.objects.filter(user=u).all()
-    # todos = ToDo.objects.all()
-    print(todos, 5555)
-    return render(request, 'dashboard.html', {'todos': todos})
-
-    if request.method == 'POST':        
-        print(request.user.id, 333333333)
-        title = request.POST['title']
-        print("title = ", title)
-        description = request.POST['description']
-        print("gfdghjkl")
-        todo = ToDo.objects.create(title=title, description=description)
-        todo.save()
-        return redirect('todo_list')
-    return render(request, 'dashboard.html', {'todos': todos})
-
+    # Fetch todos from all users (or modify the filter as needed)
+    todos = ToDo.objects.filter(user=u).all()  # Current user's todos
+    other_users_todos = ToDo.objects.exclude(user=u)  # Todos from other users
+    all_todos = todos.union(other_users_todos)
+    return render(request, 'dashboard.html', {'todos': all_todos})
 @never_cache
 @login_required
 def logout_view(request):
@@ -297,7 +285,7 @@ def edit_todo(request, id):
 def delete_todo(request, id):
     todo = get_object_or_404(ToDo, id=id)
     todo.delete()
-    return redirect('index')
+    return redirect('my_blog')
 
 def resend_otp(request):
     otp = generate_otp()
@@ -316,17 +304,17 @@ def resend_otp(request):
     # else:
     #     return redirect('register_page')
 
+def my_blog(request):
+    user = request.user
+    todos = ToDo.objects.filter(user=user)
+    return render(request, 'my_blog.html', {'todos': todos})
+
 @login_required
 def view_todo(request, id):
     todo = ToDo.objects.get(id=id)
     return render(request, 'view_todo.html', {'todo': todo})
 
-@login_required
-def others_blog(request):
-    user = request.user
-    other_users = CustomUser.objects.exclude(id=user.id)
-    other_users_todos = ToDo.objects.filter(user__in=other_users)
-    return render(request, 'others_blog.html', {'other_users_todos': other_users_todos})
+
 
 @login_required
 def user_profile(request):
