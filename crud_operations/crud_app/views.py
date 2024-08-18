@@ -28,9 +28,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from . import serializers
 from rest_framework import generics
 from .serializers import UserLoginSerializer
+import re
 
-
-
+# Create your views here.
 email_regex =  r'^(?=.*\d).{8,}$'
 email_validator = RegexValidator(
     regex=email_regex,
@@ -57,14 +57,20 @@ def send_email(email, first_name, otp):
 @never_cache
 def register_page(request):
     if request.method == 'POST':
-        # username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
-        # phone = request.POST.get('phone')
-        # profile_image = request.FILES.get('profile_image')
+
+        if not re.match(r'^[A-Za-z]+$', first_name):
+            error = "First name should only contain letters and no spaces or special characters."
+            return render(request, 'register.html', {'error': error})
+
+        # Validate last name
+        if not re.match(r'^[A-Za-z]+$', last_name):
+            error = "Last name should only contain letters and no spaces or special characters."
+            return render(request, 'register.html', {'error': error})
 
         try:
             email_validator(email)
@@ -179,6 +185,16 @@ def ced_todo(request):
 @login_required
 def index(request):
     u = request.user
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        blog_image = request.FILES.get('blog_image')
+
+        todo = ToDo.objects.create(title=title, description=description, user=u, blog_image=blog_image)
+        todo.save()
+        return redirect('index')
+
     # Fetch todos from all users (or modify the filter as needed)
     todos = ToDo.objects.filter(user=u).all()  # Current user's todos
     other_users_todos = ToDo.objects.exclude(user=u)  # Todos from other users
@@ -278,7 +294,6 @@ def edit_profile(request):
 def premium(request):
     return render(request, 'premium.html')
 
-@login_required
 def changepassword(request, token):
     try:
         user = CustomUser.objects.get(forgot_password_token=token)

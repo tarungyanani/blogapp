@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
     <style>
+        /* Navbar styles */
         nav {
             background-color: #2c3e50; /* Dark blue */
             padding: 10px;
@@ -32,26 +33,26 @@
         }
 
         .navbar a:hover {
-            color: #3498db; /* Yellow */
+            color: #3498db; /* Highlight color */
         }
 
         .profile {
             display: flex;
             align-items: center;
             list-style: none;
-            gap : 20px;
-            
+            gap: 20px;
         }
 
         .profile-pic {
-            width: 80px; /* Set a fixed width */
-            height: 80px; /* Set a fixed height */
-            border-radius: 50%; /* Make it round */
+            width: 80px; /* Set width */
+            height: 80px; /* Set height */
+            border-radius: 50%; /* Round shape */
             background-color: #444; /* Placeholder background color */
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: pointer; /* Indicate clickable */
         }
 
         .profile-pic img {
@@ -65,15 +66,49 @@
             justify-content: space-between;
             align-items: center;
             list-style: none;
-            gap : 100px;
+            gap: 100px;
         }
 
         .logout-button {
-            {% comment %} position: absolute;
-            right: 35px;
-            top: 27px; {% endcomment %}
             list-style: none;
-            margin-right: 20px;
+            margin-right: 30px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            width: 650px; /* Set size for modal image */
+            height: 650px; /* Set size for modal image */
+            border-radius: 50%; /* Round shape */
+            object-fit: cover;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -82,12 +117,12 @@
         <div class="navbar">
             <div class="profile">
             {% if user.is_authenticated %}
-                <div class="profile-pic">
-                    <a href="">
+                <div class="profile-pic" id="profile-pic">
+                    <a href="#">
                         {% if user.profile.image %}
-                            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+                            <img src="{{ user.profile.image.url }}" alt="{{ user.username }}" id="profile-image">
                         {% else %}
-                            <img src="{% static 'default.jpg' %}" alt="{{ user.username }}">
+                            <img src="{% static 'default.jpg' %}" alt="{{ user.username }}" id="profile-image">
                         {% endif %}
                     </a>
                 </div>
@@ -127,5 +162,34 @@
             </div>
         </div>
     </nav>
+
+    <!-- Modal -->
+    <div id="image-modal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modal-image">
+    </div>
+
+    <script>
+        // JavaScript to handle modal functionality
+        document.getElementById('profile-pic').onclick = function() {
+            var modal = document.getElementById('image-modal');
+            var modalImg = document.getElementById('modal-image');
+            
+            modal.style.display = "flex";
+            modalImg.src = document.getElementById('profile-image').src;
+        }
+
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('image-modal').style.display = "none";
+        }
+
+        // Close the modal if the user clicks outside of the modal content
+        window.onclick = function(event) {
+            var modal = document.getElementById('image-modal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
