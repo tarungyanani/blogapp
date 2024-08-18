@@ -27,8 +27,10 @@ body {
 }
 
 .create-blog h2 {
+    font-size: 35px;
     margin-bottom: 15px;
     text-align: center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 .create-blog form {
@@ -50,13 +52,15 @@ body {
 
 .create-blog button {
     align-items: center;
-    padding: 5px 10px;
-    background-color: #007bff;
+    padding: 10px 15px;
+    background-color: #3498db;
     color: white;
     border: none;
     cursor: pointer;
     width: 100px;
     margin: auto;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 .blog-list {
@@ -99,16 +103,27 @@ body {
 }
 
 .blog-actions {
-    margin-top: 10px;
+    display: flex;
+    gap: 10px; /* Add some space between the buttons */
+}
+
+.blog-actions form {
+    margin: 0;
 }
 
 .blog-actions button {
-    margin-right: 10px;
     padding: 5px 10px;
-    background-color: #f0f0f0;
+    background-color: #3498db;
+    color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
+
+.blog-actions button:hover {
+    background-color: #0056b3;
+}
+
 
 .blog-meta {
     display: flex;

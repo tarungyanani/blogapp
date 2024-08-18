@@ -6,45 +6,48 @@
     <link rel="stylesheet" href="{% static "edit_profile.css" %}">
 </head>
 <body>
+  {% include 'navbar.html' %}
   <div class="main">
-    <h1>Edit Profile</h1>
-    <form method="post" action="" enctype='multipart/form-data'>
-        {% csrf_token %}
-        <label for="fname">First name:</label>
-        <input type="text" id="fname" name="first_name" value="{{ user.first_name }}" required>
+    <div class="edit">
+      <h1>Edit Profile</h1>
+      <form method="post" action="" enctype='multipart/form-data'>
+          {% csrf_token %}
+          <label for="fname">First name:</label>
+          <input type="text" id="fname" name="first_name" value="{{ user.first_name }}" required>
 
-        <label for="lname">Last name:</label>
-        <input type="text" id="lname" name="last_name" value="{{ user.last_name }}" required>
+          <label for="lname">Last name:</label>
+          <input type="text" id="lname" name="last_name" value="{{ user.last_name }}" required>
 
-        <label for="phone"> Phone No. </label>
-        <input type="text" name="phone" value="{{ user.phone }}" required>
+          <label for="phone"> Phone No. </label>
+          <input type="text" name="phone" value="{{ user.phone }}" required>
 
-        <label for="image">Profile Picture:</label>
-        <input type="file" id="profile_image" name="profile_image" accept="image/*">
+          <label for="image">Profile Picture:</label>
+          <input type="file" id="profile_image" name="profile_image" accept="image/*">
 
-        <label for="gender">Gender</label>
-        <div class="radio-container">
-        <div>
-            <input type="radio" id="male" name="gender" value="male" {% if user.gender == 'male' %}checked{% endif %}>
-            <label for="male">Male</label>
+          <label for="gender">Gender</label>
+          <div class="radio-container">
+          <div>
+              <input type="radio" id="male" name="gender" value="male" {% if user.gender == 'male' %}checked{% endif %}>
+              <label for="male">Male</label>
+          </div>
+          <div>
+              <input type="radio" id="female" name="gender" value="female" {% if user.gender == 'female' %}checked{% endif %}>
+              <label for="female">Female</label>
+          </div>
         </div>
-        <div>
-            <input type="radio" id="female" name="gender" value="female" {% if user.gender == 'female' %}checked{% endif %}>
-            <label for="female">Female</label>
-        </div>
-      </div>
 
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob" value="{{ user.dob }}" required> 
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" value="{{ user.dob }}" required> 
 
-        <label for="bio">Bio</label>
-        <textarea id="bio" name="bio" rows="4" cols="50" required>{{ user.bio }}</textarea>
+          <label for="bio">Bio</label>
+          <textarea id="bio" name="bio" rows="4" cols="50" required>{{ user.bio }}</textarea>
 
-        <div class="button-container">
-        <a href="{% url 'user_profile' %}" class="back-button">Back</a>
-        <button type="submit">Save</button>
-        </div>
-    </form>
+          <div class="button-container">
+          <a href="{% url 'user_profile' %}" class="back-button">Back</a>
+          <button type="submit">Save</button>
+          </div>
+      </form>
+    </div>
   </div>
 </body>
 </html>

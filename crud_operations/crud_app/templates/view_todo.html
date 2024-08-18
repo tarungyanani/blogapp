@@ -1,31 +1,65 @@
-  {% load static %}
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <title>Your Blog</title>
-      <link rel="stylesheet" href="{% static 'view_todo.css' %}">
-  </head>
-  <body>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ todo.title }}</title>
+    <link rel="stylesheet" href="{% static 'view_todo.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
     {% include 'navbar.html' %}
-      <div class="container1">
-      <ul>
-        <li>
-          <div class="header">
-            {% if todo.blog_image %}
-              <img src="{{ todo.blog_image.url }}" alt="{{ todo.title }}" class="blog-image" style="width: 150px; height: 150px; border-radius: 10%;">
-            {% endif %}
-            <h2>{{ todo.title }}</h2>
-          </div>
-          <span class="description">Description: {{ todo.description }}</span>
-          <div class="timestamps">
-            <span class="timestamp created_at">Created At: {{ todo.created_at }}</span>
-            <span class="timestamp updated_at">Updated At: {{ todo.updated_at }}</span>
-          </div>
-          {% comment %} <div class="button-group">
-              <a href="{% url 'my_blog' %}" class="back-button">Back</a>
-          </div> {% endcomment %}
-        </li>
-      </ul>
-      </div>
-  </body>
-  </html>
+    <div class="container1">
+        <ul>
+            <li>
+                <div class="header">
+                    {% if todo.blog_image %}
+                        <img src="{{ todo.blog_image.url }}" alt="{{ todo.title }}" class="blog-image" style="width: 150px; height: 150px; border-radius: 10%;">
+                    {% endif %}
+                    <h2>{{ todo.title }}</h2>
+                </div>
+                <span class="description">Description: {{ todo.description }}</span>
+                <div class="timestamps">
+                    <span class="timestamp created_at">Created At: {{ todo.created_at }}</span>
+                    <span class="timestamp updated_at">Updated At: {{ todo.updated_at }}</span>
+                </div>
+
+                <div class="interaction-container">
+                <!-- Like Button -->
+                    <form action="{% url 'like_todo' todo.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="like-button">
+                            Like <i class="fa-solid fa-heart"></i> ({{ todo.like_set.count }})
+                        </button>
+                    </form>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <h3>Comments <i class="fa-solid fa-comment"></i></h3>
+                        <ul>
+                            {% for comment in todo.comments.all reversed %}
+                                <li>
+                                {{ comment.user.first_name }}: {{ comment.content }} ({{ comment.created_at }})
+
+                                {% if comment.user == request.user %}
+                                    <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-button">Delete</button>
+                                    </form>
+                                {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <!-- Add a Comment -->
+                        <form action="{% url 'add_comment' todo.id %}" method="post" class="add-comment">
+                            {% csrf_token %}
+                            <textarea name="content" required></textarea>
+                            <button type="submit">Add Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

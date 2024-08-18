@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password, check_password
-from .models import ToDo, CustomUser, Profile
+from .models import ToDo, CustomUser, Profile, Like, Comment
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ValidationError
@@ -99,31 +99,6 @@ def register_page(request):
 
         return redirect('verify_otp')
     return render(request, 'register.html')
-        # if username and email and password and confirm_password:
-        #     if password == confirm_password:  # Ensure all fields are provided
-                # hashed_password = make_password(password)
-                
-                # user = CustomUser.objects.create(username=username, first_name=firstname, last_name=last_name, email=email, phone=phone)
-                # user.set_password(password)
-                # user.set_password(confirm_password)
-                # Save the user object
-                # send_email(email, username)
-                # username = request.session.get('username')
-                # firstname = request.session.get('first_name')
-                # last_name = request.session.get('last_name')
-                # email = request.session.get('email')
-                # password = request.session.get('password')
-                # # confirm_password = request.POST.get('confirm_password')
-                # phone = request.session.get('phone')
-                # # user.save()
-                # # login(request, user)
-                # # return redirect('login_page')
-                # return redirect("verify_otp")
-    #         else:
-    #             error = "Password and confirm password must be same."
-    #             return render(request, 'register.html', {'error': error})
-        
-    # return render(request, 'register.html')
 
 @csrf_protect
 def verify_otp(request):
@@ -138,65 +113,31 @@ def verify_otp(request):
         if current_time - otp_time > 30:
             error = "OTP has expired. Please request a new one."
             return render(request, 'verify_otp.html', {'error': error})
-        # if user_otp and str(user_otp) == str(session_otp):
+        
         if int(user_otp) == session_otp:
-            # username = request.session.get('username')  
             first_name = request.session.get('first_name')
             last_name = request.session.get('last_name')
             email = request.session.get('email')
             password = request.session.get('password')
-            # phone = request.session.get('phone')
-            # profile_image_path = request.session.get('profile_image_path')
 
             user = CustomUser.objects.create(
-                # username=username,
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
-                # phone=phone,
                 password=make_password(password),
             )
-            # if profile_image_path:
-            #     Profile.objects.create(user=user, image=profile_image_path)
-            # user.save()
 
             del request.session['otp']
-            del request.session['otp_time'] 
-            # del request.session['username']
+            del request.session['otp_time']
             del request.session['first_name']
             del request.session['last_name']
             del request.session['email']
             del request.session['password']
-            # del request.session['phone']
-            # del request.session['profile_image_path']
             return redirect('login_page')
         else:
             return HttpResponse("Invalid OTP", status=404)
 
     return render(request, 'verify_otp.html')
-
-
-# @csrf_protect
-# def login_page(request):
-#     # print("324567890-987654")
-#     if request.method == 'POST':
-#         # print(111111111111111111)
-#         email = request.POST.get('email')
-#         # username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         # print(email, password, 5555555555553234)
-#         user = authenticate(request, email=email, password=password)
-#         # print(user, 66666666663234)
-#         # user = CustomUser.objects.filter(username=username).first()
-
-#         if user:# Ensure all fields are provided
-#             login(request, user)
-#             # print("dsfghjkhgfds")
-#             return redirect('index')
-#         else:
-#             error = "Invalid Credentials"
-#             return render(request, 'login.html', {'error': error})
-#     return render(request, 'login.html')
 
 class LoginView(generics.GenericAPIView):
     serializer_class = UserLoginSerializer
@@ -249,19 +190,6 @@ def logout_view(request):
     logout(request)
     return redirect('login_page')
 
-# def todo_list(request):
-#     todos = ToDo.objects.filter(user=request.user)
-#     todos = ToDo.objects.all()
-#     return render(request, 'todo_list.html', {'todos': todos})
-
-
-#  def user_profile(request):
-#         if request.method == 'POST':
-#             name = request.POST['name']
-#             bio = request.POST['bio']
-#             gender = request.POST['gender']
-#             location = request.POST['location']
-#         return render(request, 'user_profile.html')
 @login_required
 def edit_todo(request, id):
     todo = ToDo.objects.get(id=id)
@@ -293,16 +221,6 @@ def resend_otp(request):
     request.session['otp'] = otp
     request.session['otp_time'] = timezone.now().timestamp()
     return redirect('verify_otp')
-    # username = request.session.get('username')
-    # email = request.session.get('email')
-    # if username and email:
-    #     otp = generate_otp()
-    #     send_email(email, username, otp)
-    #     request.session['otp'] = otp
-    #     request.session['otp_time'] = timezone.now().timestamp()
-    #     return redirect('verify_otp')
-    # else:
-    #     return redirect('register_page')
 
 def my_blog(request):
     user = request.user
@@ -312,8 +230,9 @@ def my_blog(request):
 @login_required
 def view_todo(request, id):
     todo = ToDo.objects.get(id=id)
-    return render(request, 'view_todo.html', {'todo': todo})
-
+    likes = Like.objects.filter(todo=todo)
+    comments = Comment.objects.filter(todo=todo)
+    return render(request, 'view_todo.html', {'todo': todo, 'comments': comments, 'likes': likes})
 
 
 @login_required
@@ -329,7 +248,6 @@ def blog_image(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        # username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         phone = request.POST.get('phone')
@@ -338,7 +256,6 @@ def edit_profile(request):
         dob = request.POST.get('dob')
         profile_image = request.FILES.get('profile_image')
         user = request.user
-        # user.username = username
         user.first_name = first_name
         user.last_name = last_name
         user.phone = phone
@@ -411,3 +328,30 @@ def forgotpasswordpage(request):
         return redirect('login_page')
     
     return render(request, 'forgotpassword.html')
+
+def like_todo(request, id):
+    todo = get_object_or_404(ToDo, id=id)
+    like, created = Like.objects.get_or_create(user=request.user, todo=todo)
+    
+    if not created:
+        like.delete()
+    
+    return redirect('view_todo', id=id)
+
+def add_comment(request, id):
+    if request.method == "POST":
+        todo = get_object_or_404(ToDo, id=id)
+        content = request.POST.get('content')
+        Comment.objects.create(user=request.user, todo=todo, content=content)
+        return redirect('view_todo', id=id)
+    
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if comment.user == request.user:
+        comment.delete()
+        messages.success(request, 'Comment deleted successfully!')
+    else:
+        messages.error(request, 'You are not allowed to delete this comment.')
+
+    return redirect('view_todo', id=comment.todo.id)

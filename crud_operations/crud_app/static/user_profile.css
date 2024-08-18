@@ -8,17 +8,20 @@ body {
     background-repeat: no-repeat;
     margin: 0;
     padding: 0;
-    min-height: 100vh; 
+}
+
+.main {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 85vh;
 }
 
 .user_profile {
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    padding: 50px;
     width: 80%;
     max-width: 600px;
 }
@@ -37,7 +40,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .profile-image {

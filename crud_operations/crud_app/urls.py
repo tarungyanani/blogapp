@@ -24,4 +24,7 @@ urlpatterns = [
     path("premium", premium, name="premium"),
     path('forgot_password/', forgotpasswordpage, name='forgot_password'),
     path('change_password/<str:token>/', changepassword, name='change_password'),
+    path('todo/<int:id>/like/', like_todo, name='like_todo'),
+    path('todo/<int:id>/comment/', add_comment, name='add_comment'),
+    path('comment/<int:comment_id>/delete/', delete_comment, name='delete_comment'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

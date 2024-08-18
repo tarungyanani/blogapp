@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from .manager import CustomUserManager
 import re
 from django.core.validators import RegexValidator
-# Create your models here.
 
+# Create your models here.
 password_regex = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$'
 password_validator = RegexValidator(
     regex=password_regex,
@@ -30,9 +30,6 @@ class CustomUser(AbstractUser, PermissionsMixin):
     bio = models.CharField(max_length=500, null=True, blank=True)
     forgot_password_token = models.CharField(max_length=100, null=True, blank=True)
 
-    # is_active = models.BooleanField(default=True)
-    # is_staff = models.BooleanField(default=False)
-
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -40,17 +37,6 @@ class CustomUser(AbstractUser, PermissionsMixin):
 
     def __str__(self):
       return self.email
-  
-# class User(models.Model):
-#   name = models.CharField(max_length=100)
-#   email = models.EmailField()
-#   password = models.CharField(max_length=100)
-#   # profile_image = models.ImageField(upload_to="profile", blank=True, null=True)
-#   # bio = models.CharField(max_length=500, blank=True, null=True)
-#   # gender = models.CharField(max_length=10, blank=True, null=True)
-#   # location = models.CharField(max_length=25, blank=True, null=True)
-#   def __str__(self):
-#     return self.name
 
 class ToDo(models.Model):
   user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
@@ -76,3 +62,20 @@ class blog_image(models.Model):
   
   def __str__(self):
     return self.blog_image
+  
+class Like(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    todo = models.ForeignKey(ToDo, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'todo')
+
+class Comment(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    todo = models.ForeignKey(ToDo, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.todo.title}'
